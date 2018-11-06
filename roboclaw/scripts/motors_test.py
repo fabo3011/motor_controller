@@ -14,14 +14,16 @@ from roboclaw import Roboclaw
 pwm = 0
 lpwm = 0
 #driver prot
-dport = "ttyACM0"
+dport = "ttyACM1"
+dport1 = "ttyACM1"
 #Baud rate
 brate = "115200"
 #driver address
 address = 0x80
+address1 = 0x88
 #driver object
 rc = Roboclaw('/dev/' + dport, brate)
-
+rc1= Roboclaw('/dev/' + dport1,brate)
 #functions
 def callback(data):
 	global pwm
@@ -30,8 +32,8 @@ def callback(data):
 	pwm = data.axes[1]
 
 #def setpwm():
-	global pwm
-	global lpwm
+	#global pwm
+	#global lpwm
 	global address
 	rospy.loginfo("test 1")
 #	while 1:
@@ -42,11 +44,14 @@ def callback(data):
 		if pwm > 0.02 :
 			rospy.loginfo(pwm)
 			rc.ForwardM1(address,(long(pwm*127)))
+			#rc1.ForwardM1(address1,(long(pwm*127)))
 		elif pwm < 0.02:
 			rospy.loginfo(pwm)
 			rc.BackwardM1(address,(long(pwm*-127)))
+			#rc1.BackwardM1(address1,(long(pwm*-127)))
 		else:
-			rc.FowardM1(address,0)
+			rc.ForwardM1(address,0)
+			#rc1.ForwardM1(address1,0)
 	else:
 		rospy.loginfo("No change")
 #		rospy.spin()
@@ -57,6 +62,10 @@ def initnode():
 	rospy.Subscriber('joy',Joy, callback)
 	if rc.Open():
 		print (rc._port)
+		#print (rc1._port)
+
+		#rc1.ForwardM1(address1,0)
+		rc.ForwardM1(address,0)
 	else:
 		exit("Error at try open port " + dport)
 	rospy.spin()
