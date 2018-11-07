@@ -1,0 +1,15 @@
+<package format="2">
+	<name>motor_controller</name>
+	<version>0.0.0</version>
+	<description>
+		This package provides motor controller
+	</description>
+	<maintainer email="ivan.aochoa.g@hotmail.com">Ivan Ochoa</maintainer>
+	<license>NA</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<export>
+		<metapackage/>
+	</export>
+</package>
