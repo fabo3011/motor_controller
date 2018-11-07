@@ -14,16 +14,13 @@ from roboclaw import Roboclaw
 pwm = 0
 lpwm = 0
 #driver prot
-dport = "ttyACM1"
-dport1 = "ttyACM1"
+dport = "ttyACM2"
 #Baud rate
 brate = "115200"
 #driver address
 address = 0x80
-address1 = 0x88
 #driver object
 rc = Roboclaw('/dev/' + dport, brate)
-rc1= Roboclaw('/dev/' + dport1,brate)
 #functions
 def callback(data):
 	global pwm
