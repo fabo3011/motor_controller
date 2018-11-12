@@ -64,7 +64,7 @@ class tank:
                 self.rccm[i].ForwardM1(self.msID[0],pwm)
         elif side == 'left':
             for i in range(1,2):
-                self.rccm.BackwardM1(self.msID[1],pwm)
+                self.rccm[i].BackwardM1(self.msID[1],pwm)
     
     def Forward(self,x):
         print("uno")

@@ -38,7 +38,7 @@ class tank_node:
         self.mctl.z = joy.button[1]
     
     def armCB(self,cam):
-        self.actl.x = cam.x
+        self.actl.x = 1
         self.actl.z = cam.y
         self.actl.y = cam.z
 
