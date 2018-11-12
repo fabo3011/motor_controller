@@ -6,14 +6,18 @@ from roboclaw import Roboclaw
 
 class tank:
     def __init__(self,port,baud,pwmLimit,motorsID):
-        self._port = port
-        self._brte = baud
-        self._pwml = pwmLimit
-        self._msID = motorsID
-        self._rccm = self._createRC(self._port,self._brte)
-        self._open()
+        self.pord = port
+        print("koko")
+        self.brte = baud
+        self.pwml = pwmLimit
+        self.msID = motorsID
+        print("skdf")
+        self.rccm = self.createRC(port,baud)
+        print("caca")
+        self.open()
 
     def tankDrive(self,joy):
+        print("dfdf")
         if joy.y > 0.2:
             self.goForward('rigth',self.fixPwm(joy.y))
         elif joy.y < 0.2:
@@ -28,68 +32,84 @@ class tank:
         else:
             self.setTo0('left')
     def armDrive(self,arm):
+        print("dfsd")
         self.pich(arm.y)
+        print("sdfsdfsdfs")
         self.yaw(arm.z)
-        self.Froward(arm.x)
+        print("ffif")
+        self.Forward(arm.x)
+        print("fsfdsfdsdf")
 
         
     def open(self):
-        for i in range(1,2):
-            if self._rccm[i].Open():
-                print(self._rccm._port)
+        print("caca2")
+        for i in range(0,3):
+            #print (self.rccm)
+            if self.rccm[i].Open():
+               print(self.rccm[i]._port)
             else: 
-                exit("Error: cannot open port: " + self._port[i])
+                print("Error: cannot open port: " + self.pord[i])
         
     def createRC(self,port,baud):
-        for i in range(1,2):
-            self._rccm[i] = Roboclaw('/dev/' + port[i], baud)
-    
+        print(port)
+        listrc = [None,None,None]
+        for i in range(0,3):
+            print("kokoko")
+            listrc[i] = Roboclaw('/dev/' + port[i], baud)
+        return listrc
+
     def goForward(self,side,pwm):
         if side == 'rigth':
             for i in range(1,2):
-                self._rccm[i].ForwardM1(self._msID[0],pwm)
+                self.rccm[i].ForwardM1(self.msID[0],pwm)
         elif side == 'left':
             for i in range(1,2):
-                self._rccm.BackwardM1(self._msID[1],pwm)
+                self.rccm.BackwardM1(self.msID[1],pwm)
     
     def Forward(self,x):
+        print("uno")
         if x == 1:
+            print('fdf')
             self.goForward('right',50)
-            self.goForward('left',50)        
+            self.goForward('left',50)    
+        else:
+            print('wewew')
+            self.setTo0('right')
+            self.setTo0('left')    
 
     def goBackward(self,side,pwm):
         if side == 'rigth':
             for i in range(1,2):
-                self._rccm[i].BackwardM1(self._msID[0],pwm)
+                self.rccm[i].BackwardM1(self.msID[0],pwm)
         elif side == 'left':
             for i in range(1,2):
-                self._rccm[i].ForwardM1(self._msID[1],pwm)
+                self.rccm[i].ForwardM1(self.msID[1],pwm)
         else:
             print("Warnig: command not found.")
     
     def pich(self,id):
         if id == 1:
-            self._rccm[0].ForwardM1(self._msID[0],50)
+            self.rccm[0].ForwardM1(self.msID[0],80)
         elif id == -1:
-            self._rccm[0].BackwardM1(self._msID[0],50)
+            self.rccm[0].BackwardM1(self.msID[0],80)
         else:
-            self._rccm[0].ForwardM1(self._msID[0],0)
+            self.rccm[0].ForwardM1(self.msID[0],0)
     
     def yaw(self,id):
         if id == 1:
-            self._rccm[0].ForwardM1(self._msID[1],50)
+            self.rccm[0].ForwardM1(self.msID[1],20)
         elif id == -1:
-            self._rccm[0].BackwardM1(self._msID[1],50)
+            self.rccm[0].BackwardM1(self.msID[1],20)
         else:
-            self._rccm[0].ForwardM1(self._msID[1],0)
+            self.rccm[0].ForwardM1(self.msID[1],0)
 
     def setTo0(self,side):
         if side == 'rigth':
             for i in range(1,2):
-                self._rccm[i].ForwardM1(self._msID[0],0)
+                self.rccm[i].ForwardM1(self.msID[0],0)
         if side == 'left':
             for i in range(1,2):
-                self._rccm[i].ForwardM1(self._msID[1],0)
+                self.rccm[i].ForwardM1(self.msID[1],0)
     
     def fixPwm(self,percentage):
-        return long(round(percentage*self._pwml,2))
+        return long(round(percentage*self.pwml,2))
