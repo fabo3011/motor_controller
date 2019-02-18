@@ -25,8 +25,8 @@ class tank_node:
         print(self.mctl)
 
 if __name__=="__main__":
-    rospy.init_node('rover')
-    try:
-        tank_node()
-    except:
-        pass
+    rospy.init_node('MotorsAlv')
+    #try:
+    tank_node()
+    #except:
+    #    pass
