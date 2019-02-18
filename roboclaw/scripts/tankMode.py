@@ -16,14 +16,14 @@ class tank:
     def tankDrive(self,joy):
         if joy.y > 0.2:
             self.goForward('rigth',self.fixPwm(joy.y))
-        elif joy.y < 0.2:
+        elif joy.y < -0.2:
             self.goBackward('rigth',self.fixPwm(-joy.y))
         else:
             self.setTo0('rigth')
 
         if joy.x > 0.2:
             self.goForward('left',self.fixPwm(joy.x))
-        elif joy.x < 0.2:
+        elif joy.x < -0.2:
             self.goBackward('left',self.fixPwm(-joy.x))
         else:
             self.setTo0('left')
@@ -34,8 +34,8 @@ class tank:
             if self.rccm[i].Open():
                print(self.rccm[i]._port)
             else: 
-                print("Error: cannot open port: " + self.pord[i])
-        
+                exit("Error: cannot open port: " + self.pord[i])
+
     def createRC(self,port,baud):
         print(port)
         listrc = [None,None,None]
@@ -50,7 +50,7 @@ class tank:
         elif side == 'left':
             for i in range(0,3):
                 self.rccm[i].BackwardM1(self.msID[1],pwm)
-    
+
     def Forward(self,x):
         if x == 1:
             self.goForward('right',50)
@@ -76,6 +76,6 @@ class tank:
         if side == 'left':
             for i in range(1,3):
                 self.rccm[i].ForwardM1(self.msID[1],0)
-    
+
     def fixPwm(self,percentage):
         return long(round(percentage*self.pwml,2))

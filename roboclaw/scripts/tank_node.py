@@ -18,7 +18,7 @@ class tank_node:
             #print(self.mctl)
             self.rover.tankDrive(self.mctl)
             r.sleep()
-    
+
     def sideCB(self,joy):
         self.mctl.x = joy.axes[1]
         self.mctl.y = joy.axes[4]
