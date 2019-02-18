@@ -39,8 +39,8 @@ def callback(joys):
 	global data
 	global pwm
 
-	data[0] = long(round(joys.axes[1]*pwm,0))
-	data[1] = long(round(joys.axes[4]*pwm,0))
+	data[0] = long(round(joys.axes[4]*pwm,0))
+	data[1] = long(round(joys.axes[1]*pwm,0))
 	print("------------------------")
 	print(data)
 	print("++++++++++++++++++++++++")

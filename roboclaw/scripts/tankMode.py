@@ -45,10 +45,10 @@ class tank:
 
     def goForward(self,side,pwm):
         if side == 'rigth':
-            for i in range(1,2):
+            for i in range(0,3):
                 self.rccm[i].ForwardM1(self.msID[0],pwm)
         elif side == 'left':
-            for i in range(1,2):
+            for i in range(0,3):
                 self.rccm[i].BackwardM1(self.msID[1],pwm)
     
     def Forward(self,x):
@@ -61,10 +61,10 @@ class tank:
 
     def goBackward(self,side,pwm):
         if side == 'rigth':
-            for i in range(1,3):
+            for i in range(1,2):
                 self.rccm[i].BackwardM1(self.msID[0],pwm)
         elif side == 'left':
-            for i in range(1,3):
+            for i in range(1,2):
                 self.rccm[i].ForwardM1(self.msID[1],pwm)
         else:
             print("Warnig: command not found.")
