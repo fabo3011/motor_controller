@@ -29,45 +29,38 @@ class tank:
             self.setTo0('left')
         
     def open(self):
-        for i in range(0,3):
-            #print (self.rccm)
-            if self.rccm[i].Open():
-               print(self.rccm[i]._port)
-            else: 
-                exit("Error: cannot open port: " + self.pord[i])
+        if self.rccm.Open():
+            print(self.rccm._port)
+        else: 
+            exit("Error: cannot open port: " + self.pord[i])
 
     def createRC(self,port,baud):
-        print(port)
-        listrc = [None,None,None]
-        for i in range(3):
-            listrc[i] = Roboclaw('/dev/' + port[i], baud)
+        listrc = Roboclaw('/dev/' + port, baud)
         return listrc
 
     def goForward(self,side,pwm):
-        if side == 'rigth':
-            for i in range(3):
-                self.rccm[i].ForwardM1(self.msID[0],pwm)
-        elif side == 'left':
-            for i in range(3):
-                self.rccm[i].BackwardM1(self.msID[1],pwm)  
+        for i in range(3):
+            if side == 'rigth':
+                self.rccm.ForwardM1(self.msID[i],pwm)
+            elif side == 'left':
+                self.rccm.BackwardM1(self.msID[i+3],pwm)  
 
     def goBackward(self,side,pwm):
-        if side == 'rigth':
-            for i in range(3):
-                self.rccm[i].BackwardM1(self.msID[0],pwm)
-        elif side == 'left':
-            for i in range(3):
-                self.rccm[i].ForwardM1(self.msID[1],pwm)
+        for i in range(3):
+            if side == 'rigth':
+                self.rccm.BackwardM1(self.msID[i],pwm)
+            elif side == 'left':
+                self.rccm.ForwardM1(self.msID[i+3],pwm)
         else:
             print("Warnig: command not found.")
     
     def setTo0(self,side):
-        if side == 'rigth':
-            for i in range(3):
-                self.rccm[i].ForwardM1(self.msID[0],0)
-        if side == 'left':
-            for i in range(3):
-                self.rccm[i].ForwardM1(self.msID[1],0)
+        
+        for i in range(3):
+            if side == 'rigth':
+                self.rccm.ForwardM1(self.msID[i],0)
+            elif side == 'left':
+                self.rccm.ForwardM1(self.msID[i+3],0)
 
     def fixPwm(self,percentage):
         return long(round(percentage*self.pwml,2))

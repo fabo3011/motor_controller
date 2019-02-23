@@ -10,7 +10,7 @@ from tankMode import tank
 class tank_node:
     def __init__(self):
         self.mctl = Vector3()
-        self.rover = tank(port=['ttyACM0','ttyACM1','ttyACM2'],baud='115200',pwmLimit=102,motorsID=[128,129])
+        self.rover = tank(port='ttyACM0',baud='115200',pwmLimit=102,motorsID=[128,129,130,131,132,133])
         rospy.Subscriber('joy',Joy,self.sideCB)
 
         r = rospy.Rate(10)
