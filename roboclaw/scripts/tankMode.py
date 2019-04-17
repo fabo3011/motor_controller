@@ -32,7 +32,7 @@ class tank:
         if self.rccm.Open():
             print(self.rccm._port)
         else: 
-            exit("Error: cannot open port: " + self.pord[i])
+            exit("Error: cannot open port: " + self.pord)
 
     def createRC(self,port,baud):
         listrc = Roboclaw('/dev/' + port, baud)
