@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/opt/ros/melodic/include",
+        "/home/ivan/catkin_ws/src/motor_controller/mode_sel/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}

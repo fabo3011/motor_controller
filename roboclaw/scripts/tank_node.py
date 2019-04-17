@@ -3,15 +3,16 @@ import roslib
 import rospy
 import math
 
-from sensor_msgs.msg import Joy
+from std_msgs.msg import Float32
 from geometry_msgs.msg import Vector3
 from tankMode import tank 
 
 class tank_node:
     def __init__(self):
-        self.mctl = Vector3()
+        self.mctl = Vector3
         self.rover = tank(port='ttyACM0',baud='115200',pwmLimit=102,motorsID=[128,129,130,131,132,133])
-        rospy.Subscriber('joy',Joy,self.sideCB)
+        rospy.Subscriber('/Motors/',Float32,self.left)
+        rospy.Subscriber('/Motors/')
 
         r = rospy.Rate(10)
         while not rospy.is_shutdown():
@@ -19,10 +20,11 @@ class tank_node:
             self.rover.tankDrive(self.mctl)
             r.sleep()
 
-    def sideCB(self,joy):
-        self.mctl.x = joy.axes[1]
-        self.mctl.y = joy.axes[4]
-        print(self.mctl)
+    def left(self,vel):
+        self.mctl.x = vel
+
+    def right(self,vel):
+        self.mctl.y = vel
 
 if __name__=="__main__":
     rospy.init_node('MotorsAlv')
