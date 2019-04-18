@@ -11,8 +11,8 @@ class tank_node:
     def __init__(self):
         self.mctl = Vector3
         self.rover = tank(port='ttyACM0',baud='115200',pwmLimit=102,motorsID=[128,129,130,131,132,133])
-        rospy.Subscriber('/Motors/',Float32,self.left)
-        rospy.Subscriber('/Motors/')
+        rospy.Subscriber('/Motors/left_vel',Float32,self.left)
+        rospy.Subscriber('/Motors/right_vel',Float32,self.right)
 
         r = rospy.Rate(10)
         while not rospy.is_shutdown():
