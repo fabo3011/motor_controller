@@ -30,7 +30,7 @@ class tank:
         else:
             self.setTo0('left')
        # speed = self.ReadSpeed(self.msID)
-        return speed
+        return 0
         
     def open(self):
         if self.rccm.Open():
