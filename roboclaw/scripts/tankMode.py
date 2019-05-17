@@ -29,7 +29,7 @@ class tank:
             self.goBackward('left',self.fixPwm(-joy.x))
         else:
             self.setTo0('left')
-        speed = self.ReadSpeed(self.msID)
+       # speed = self.ReadSpeed(self.msID)
         return speed
         
     def open(self):
