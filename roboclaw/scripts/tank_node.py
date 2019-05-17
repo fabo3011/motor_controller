@@ -28,10 +28,10 @@ class tank_node:
             r.sleep()
 
     def left(self,vel):
-        self.mctl.x = vel
+        self.mctl.x = vel.data
 
     def right(self,vel):
-        self.mctl.y = vel
+        self.mctl.y = vel.data
 
 if __name__=="__main__":
     rospy.init_node('MotorsAlv')
