@@ -1,4 +1,4 @@
-#/usr/bin/env python
+#!/usr/bin/env python
 
 #Ros libs
 import rospy
@@ -39,8 +39,8 @@ def callback(joys):
 	global data
 	global pwm
 
-	data[0] = long(round(joys.axes[1]*pwm,0))
-	data[1] = long(round(joys.axes[4]*pwm,0))
+	data[0] = long(round(joys.axes[4]*pwm,0))
+	data[1] = long(round(joys.axes[1]*pwm,0))
 	print("------------------------")
 	print(data)
 	print("++++++++++++++++++++++++")
@@ -48,41 +48,41 @@ def callback(joys):
 #set left motors
     #Foward
 	if data[0] > 0.02:
-		rc2.ForwardM1(mtor[0],data[0])
+		rc0.ForwardM1(mtor[0],data[0])
 		rc1.ForwardM1(mtor[0],data[0])
-		rc1.ForwardM1(mtor[1],data[0])
+		rc2.ForwardM1(mtor[0],data[0])
 		#rc.SpeedM1(mtor[i],data[0]*vlmx)
     #Backward
 	elif data[0] < 0.02:
-		rc2.BackwardM1(mtor[0],-data[0])
+		rc0.BackwardM1(mtor[0],-data[0])
 		rc1.BackwardM1(mtor[0],-data[0])
-		rc1.BackwardM1(mtor[1],-data[0])
+		rc2.BackwardM1(mtor[0],-data[0])
 		#rc.SpeedM1(mtor[i],data[0]*-vlmx)
     #set to 0 
 	else:
-		rc2.ForwardM1(mtor[0],0)
+		rc0.ForwardM1(mtor[0],0)
 		rc1.ForwardM1(mtor[0],0)
-		rc1.ForwardM1(mtor[1],0)
+		rc2.ForwardM1(mtor[0],0)
 		#rc.SpeedM1(mtor[i],0)
                 
 #set rigth motors
     #Forward
 	if data[1] < 0.02:
-		rc2.ForwardM1(mtor[1],-data[1])
 		rc0.ForwardM1(mtor[1],-data[1])
-		rc0.ForwardM1(mtor[0],-data[1])
+		rc1.ForwardM1(mtor[1],-data[1])
+		rc2.ForwardM1(mtor[1],-data[1])
 		#rc.SpeedM1(mtor[i],data[1]*vlmx)
 	#Backward
 	elif data[1] > 0.02:
-		rc2.BackwardM1(mtor[1],data[1])
 		rc0.BackwardM1(mtor[1],data[1])
-		rc0.BackwardM1(mtor[0],data[1])
+		rc1.BackwardM1(mtor[1],data[1])
+		rc2.BackwardM1(mtor[1],data[1])
 		#rc.SpeedM1(mtor[i],data[1]*vlmx)
 	#Set to 0
 	else:
-		rc2.ForwardM1(mtor[1],0)
 		rc0.ForwardM1(mtor[1],0)
-		rc0.ForwardM1(mtor[0],0)
+		rc1.ForwardM1(mtor[1],0)
+		rc2.ForwardM1(mtor[1],0)
     	#rc.SpeedM1(mtor[i],0)
 	
             
