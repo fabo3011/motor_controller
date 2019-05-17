@@ -27,7 +27,9 @@ class input_sel:
         rate = rospy.Rate(10)
 
         while not rospy.is_shutdown():
-            rospy.loginfo("left vel: %d   right vel: %d" %self.left_Vel %self.rightVel )
+            float(self.left_Vel)
+            float(self.rightVel)
+            rospy.loginfo("left vel: %f   right vel: %f" %self.left_Vel %self.rightVel )
             lvel_pub.publish(self.left_Vel)
             rvel_pub.publish(self.rightVel)
             rate.sleep()
