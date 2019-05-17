@@ -32,14 +32,14 @@ class input_sel:
             rvel_pub.publish(self.rightVel)
             rate.sleep()
 
-    def sideCB (self,cmode.data):
-        if cmode == 'j':
+    def sideCB (self,cmode):
+        if cmode.data == 'j':
             self.left_Vel.data = self.joy2lVel
             self.rightVel.data = self.joy2rVel
-        elif cmode == 'i':
+        elif cmode.data == 'i':
             self.left_Vel.data = self.aut2lVel
             self.rightVel.data = self.aut2rVel
-        elif cmode == 's':
+        elif cmode.data == 's':
             self.left_Vel.data = 0
             self.rightVel.data = 0
         else:
