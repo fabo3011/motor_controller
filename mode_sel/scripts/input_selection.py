@@ -33,13 +33,13 @@ class input_sel:
             rate.sleep()
 
     def sideCB (self,cmode):
-        if cmode.data == 'j':
+        if cmode.data == 1:
             self.left_Vel.data = self.joy2lVel
             self.rightVel.data = self.joy2rVel
-        elif cmode.data == 'i':
+        elif cmode.data == 2:
             self.left_Vel.data = self.aut2lVel
             self.rightVel.data = self.aut2rVel
-        elif cmode.data == 's':
+        elif cmode.data == 3:
             self.left_Vel.data = 0
             self.rightVel.data = 0
         else:
