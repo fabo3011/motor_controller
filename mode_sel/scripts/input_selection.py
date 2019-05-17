@@ -27,37 +27,35 @@ class input_sel:
         rate = rospy.Rate(10)
 
         while not rospy.is_shutdown():
-            float(self.left_Vel)
-            float(self.rightVel)
-            rospy.loginfo("left vel: %f   right vel: %f" %self.left_Vel %self.rightVel )
+            rospy.loginfo("left vel: %f   right vel: %f" %self.left_Vel.data %self.rightVel.data )
             lvel_pub.publish(self.left_Vel)
             rvel_pub.publish(self.rightVel)
             rate.sleep()
 
     def sideCB (self,cmode):
         if cmode == 'j':
-            self.left_Vel = self.joy2lVel
-            self.rightVel = self.joy2rVel
+            self.left_Vel.data = self.joy2lVel
+            self.rightVel.data = self.joy2rVel
         elif cmode == 'i':
-            self.left_Vel = self.aut2lVel
-            self.rightVel = self.aut2rVel
+            self.left_Vel.data = self.aut2lVel
+            self.rightVel.data = self.aut2rVel
         elif cmode == 's':
-            self.left_Vel = 0
-            self.rightVel = 0
+            self.left_Vel.data = 0
+            self.rightVel.data = 0
         else:
             rospy.loginfo('MAAAMEEEEES, ponte vergas y pon < j > para manual o < i > para autonomia o interfaz')
-            self.left_Vel = 0
-            self.rightVel = 0
+            self.left_Vel.data = 0
+            self.rightVel.data = 0
 
     def joy2linvel(self,joy):
-        self.joy2rvel = joy[1]
-        self.joy2lVel = joy[4]
+        self.joy2rvel.data = joy[1]
+        self.joy2lVel.data = joy[4]
     
     def leftCB (self,float32):
-        self.aut2lVel = float32
+        self.aut2lVel.data = float32.data
 
     def rightCB (self,float32):
-        self.aut2rVel = float32
+        self.aut2rVel.data = float32.data
 
 if __name__ == '__main__':
     rospy.init_node('Mode_selection',anonymous=True)
