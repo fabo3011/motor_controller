@@ -1,4 +1,4 @@
-#!usr/bin/env python
+#!/usr/bin/env python
 
 import roslib
 import rospy
@@ -9,12 +9,12 @@ from std_msgs.msg import Char
 
 class input_sel:
     def __init__ (self):
-        self.joy2rVel = Float32
-        self.joy2lVel = Float32
-        self.aut2rVel = Float32
-        self.aut2lVel = Float32
-        self.left_Vel = Float32
-        self.rightVel = Float32
+        self.joy2rVel = Float32()
+        self.joy2lVel = Float32()
+        self.aut2rVel = Float32()
+        self.aut2lVel = Float32()
+        self.left_Vel = Float32()
+        self.rightVel = Float32()
 
         rospy.Subscriber('/Motors/mode',Char,self.sideCB)
         rospy.Subscriber('joy',Joy,self.joy2linvel)
