@@ -48,8 +48,8 @@ class input_sel:
             self.rightVel.data = 0
 
     def joy2linvel(self,joy):
-        self.joy2rvel.data = joy[1]
-        self.joy2lVel.data = joy[4]
+        self.joy2rVel.data = joy[1]
+        self.joy2lVel.data = joy[3]
     
     def leftCB (self,float32):
         self.aut2lVel.data = float32.data
