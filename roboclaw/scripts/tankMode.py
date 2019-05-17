@@ -29,8 +29,8 @@ class tank:
             self.goBackward('left',self.fixPwm(-joy.x))
         else:
             self.setTo0('left')
-        speed = self.ReadSpeed(self.msID)
-        return speed
+       # speed = self.ReadSpeed(self.msID)
+        return 0
         
     def open(self):
         if self.rccm.Open():
