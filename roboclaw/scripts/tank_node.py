@@ -2,6 +2,7 @@
 import roslib
 import rospy
 import math
+import os
 
 from std_msgs.msg import Float32
 from std_msgs.msg import Float32MultiArray
@@ -34,6 +35,7 @@ class tank_node:
         self.mctl.y = vel.data
 
 if __name__=="__main__":
+    os.system("sudo chmod 777 /dev/ttyACM0")
     rospy.init_node('MotorsAlv')
     #try:
     tank_node()

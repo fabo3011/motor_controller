@@ -5,7 +5,7 @@ import rospy
 
 from sensor_msgs.msg import Joy
 from std_msgs.msg import Float32
-from std_msgs.msg import Char
+from std_msgs.msg import UInt8
 
 class input_sel:
     def __init__ (self):
@@ -15,8 +15,9 @@ class input_sel:
         self.aut2lVel = Float32()
         self.left_Vel = Float32()
         self.rightVel = Float32()
+	self.modeVel  = UInt8()
 
-        rospy.Subscriber('/Motors/mode',Char,self.sideCB)
+        rospy.Subscriber('/Motors/mode',UInt8,self.sideCB)
         rospy.Subscriber('joy',Joy,self.joy2linvel)
         rospy.Subscriber('/BaseController/left_vel',Float32,self.leftCB)
         rospy.Subscriber('/BaseController/right_vel',Float32,self.rightCB)
@@ -28,24 +29,35 @@ class input_sel:
 
         while not rospy.is_shutdown():
             rospy.loginfo("left vel: %f   right vel: %f" % (self.left_Vel.data,self.rightVel.data) )
+	    selectVelByMode()
             lvel_pub.publish(self.left_Vel)
             rvel_pub.publish(self.rightVel)
             rate.sleep()
 
+    def selectVelByMode(self):
+        if   self.modeVel == 1:   #JOY mode
+
+            self.left_Vel.data = self.joy2lVel.data
+            self.rightVel.data = self.joy2rVel.data
+
+        elif self.modeVel == 2:   #Autonomous mode
+
+            self.left_Vel.data = self.aut2lVel.data
+            self.rightVel.data = self.aut2rVel.data
+
+        elif self.modeVel == 3:   #Stop Rover 
+
+            self.left_Vel.data = 0
+            self.rightVel.data = 0
+
+        else:                   #Invalid msg
+
+            rospy.loginfo('Invalid msg, stopping robot')
+            self.left_Vel.data = 0
+            self.rightVel.data = 0
+
     def sideCB (self,cmode):
-        if cmode == '1':
-            self.left_Vel.data = self.joy2lVel
-            self.rightVel.data = self.joy2rVel
-        elif cmode == '2':
-            self.left_Vel.data = self.aut2lVel
-            self.rightVel.data = self.aut2rVel
-        elif cmode == '3':
-            self.left_Vel.data = 0
-            self.rightVel.data = 0
-        else:
-            rospy.loginfo('MAAAMEEEEES, ponte vergas y pon < j > para manual o < i > para autonomia o interfaz')
-            self.left_Vel.data = 0
-            self.rightVel.data = 0
+        self.modeVel = cmode.data
 
     def joy2linvel(self,joy):
         self.joy2rVel.data = joy.axes[1]
