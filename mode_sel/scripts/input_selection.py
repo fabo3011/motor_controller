@@ -28,13 +28,14 @@ class input_sel:
         rate = rospy.Rate(10)
 
         while not rospy.is_shutdown():
-            rospy.loginfo("left vel: %f   right vel: %f" % (self.left_Vel.data,self.rightVel.data) )
-	    selectVelByMode()
+            #rospy.loginfo("left vel: %f   right vel: %f" % (self.left_Vel.data,self.rightVel.data) )
+	    self.selectVelByMode()
             lvel_pub.publish(self.left_Vel)
             rvel_pub.publish(self.rightVel)
             rate.sleep()
 
     def selectVelByMode(self):
+        #rospy.loginfo(self.modeVel)
         if   self.modeVel == 1:   #JOY mode
 
             self.left_Vel.data = self.joy2lVel.data
@@ -61,7 +62,7 @@ class input_sel:
 
     def joy2linvel(self,joy):
         self.joy2rVel.data = joy.axes[1]
-        self.joy2lVel.data = joy.axes[3]
+        self.joy2lVel.data = joy.axes[4]
     
     def leftCB (self,float32):
         self.aut2lVel.data = float32.data
