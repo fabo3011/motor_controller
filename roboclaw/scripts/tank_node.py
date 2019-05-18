@@ -35,7 +35,7 @@ class tank_node:
         self.mctl.y = vel.data
 
 if __name__=="__main__":
-    os.system("sudo chmod 777 /dev/ttyACM0")
+    os.system("chmod 777 /dev/ttyACM0")
     rospy.init_node('MotorsAlv')
     #try:
     tank_node()
