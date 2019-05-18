@@ -1,0 +1,6 @@
+<launch>
+
+	<node name="tank_node" pkg="roboclaw" type="tank_node.py" />
+	<node name="input_selection" pkg="mode_sel" type="input_selection.py"   />
+
+</launch>
