@@ -22,7 +22,7 @@ class tank_node:
         
         r = rospy.Rate(10)
         while not rospy.is_shutdown():
-            #rospy.loginfo(self.speed)
+            rospy.loginfo(self.speed)
             #print(self.mctl)
             self.speed.data = self.rover.tankDrive(self.mctl)
             speed_pub.publish(self.speed)
@@ -35,7 +35,7 @@ class tank_node:
         self.mctl.y = vel.data
 
 if __name__=="__main__":
-    os.system("chmod 777 /dev/ttyACM0")
+    os.system("sudo chmod 777 /dev/ttyACM0")
     rospy.init_node('MotorsAlv')
     #try:
     tank_node()
