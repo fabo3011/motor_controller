@@ -15,8 +15,8 @@ class input_sel:
         self.aut2lVel = Float32()
         self.left_Vel = Float32()
         self.rightVel = Float32()
-	self.modeVel  = UInt8()
-
+        self.modeVel  = UInt8()
+        
         rospy.Subscriber('/Motors/mode',UInt8,self.sideCB)
         rospy.Subscriber('joy',Joy,self.joy2linvel)
         rospy.Subscriber('/BaseController/left_vel',Float32,self.leftCB)

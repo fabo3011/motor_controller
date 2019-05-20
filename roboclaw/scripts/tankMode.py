@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from sys import exit
+import rospy
+import os
 
 from roboclaw import Roboclaw
 
@@ -33,6 +35,11 @@ class tank:
         return 0
         
     def open(self):
+        for i in range(10):
+            rospy.loginfo("waiting port: %s. %i sec." %(self.pord,10-i))
+        else:
+            rospy.loginfo("open port: %s" %self.pord)
+        os.system("sudo chmod 777 /dev/" + self.pord)
         if self.rccm.Open():
             print(self.rccm._port)
         else: 
