@@ -18,7 +18,7 @@ class tank_node:
         rospy.Subscriber('/Motors/left_vel',Float32,self.left)
         rospy.Subscriber('/Motors/right_vel',Float32,self.right)
 
-        speed_pub = rospy.Publisher('/Motors/motors_speed',Float32MultiArray,queue_size=10)
+        #speed_pub = rospy.Publisher('/Motors/motors_speed',Float32MultiArray,queue_size=10)
         
         r = rospy.Rate(10)
         while not rospy.is_shutdown():
@@ -26,13 +26,15 @@ class tank_node:
             #print(self.mctl)
             rospy.loginfo(self.mctl)
             self.speed.data = self.rover.tankDrive(self.mctl)
-            speed_pub.publish(self.speed)
+            #speed_pub.publish(self.speed)
             r.sleep()
 
     def left(self,vel):
+        print(1)
         self.mctl.x = vel.data
 
     def right(self,vel):
+        print(2)
         self.mctl.y = vel.data
 
 if __name__=="__main__":

@@ -61,8 +61,8 @@ class input_sel:
         self.modeVel.data = cmode.data
 
     def joy2linvel(self,joy):
-        self.joy2rVel.data = joy.axes[1]
-        self.joy2lVel.data = joy.axes[4]
+        self.joy2rVel.data = joy.axes[4]
+        self.joy2lVel.data = joy.axes[1]
     
     def leftCB (self,float32):
         self.aut2lVel.data = float32.data
