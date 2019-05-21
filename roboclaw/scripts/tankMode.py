@@ -20,7 +20,7 @@ class tank:
     def tankDrive(self,joy):
         
         if joy.y > 0.2:
-            self.goForward('rigth',self.fixPwm(joy.y))
+            self.goForward(0,self.fixPwm(joy.y))
         elif joy.y < -0.2:
             self.goBackward('rigth',self.fixPwm(-joy.y))
         else:
@@ -57,7 +57,9 @@ class tank:
             if side == 'rigth':
                 self.rccm.ForwardM1(self.msID[i],pwm)
             elif side == 'left':
-                self.rccm.BackwardM1(self.msID[i+3],pwm)  
+                self.rccm.BackwardM1(self.msID[i+3],pwm)
+            else:
+                print("Warnig: command not found.")  
 
     def goBackward(self,side,pwm):
         for i in range(3):
@@ -65,8 +67,8 @@ class tank:
                 self.rccm.BackwardM1(self.msID[i],pwm)
             elif side == 'left':
                 self.rccm.ForwardM1(self.msID[i+3],pwm)
-        else:
-            print("Warnig: command not found.")
+            else:
+                print("Warnig: command not found.")
     
     def setTo0(self,side):
         
