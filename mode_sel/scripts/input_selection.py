@@ -46,7 +46,7 @@ class input_sel:
             self.left_Vel.data = self.aut2lVel.data
             self.rightVel.data = self.aut2rVel.data
 
-        elif self.modeVel == 3:   #Stop Rover 
+        elif self.modeVel == UInt8(3):   #Stop Rover 
 
             self.left_Vel.data = 0
             self.rightVel.data = 0
