@@ -29,7 +29,7 @@ class input_sel:
 
         while not rospy.is_shutdown():
             rospy.loginfo("left vel: %f   right vel: %f" % (self.left_Vel.data,self.rightVel.data) )
-	    self.selectVelByMode()
+	        self.selectVelByMode()
             lvel_pub.publish(self.left_Vel)
             rvel_pub.publish(self.rightVel)
             rate.sleep()
