@@ -30,11 +30,16 @@ class tank_node:
             r.sleep()
 
     def left(self,vel):
-        print(1)
+        print('-------------------------------')
+        print(vel)
+        print('-------------------------------')
+
         self.mctl.x = vel.data
 
     def right(self,vel):
-        print(2)
+        print('+++++++++++++++++++++++++++++')
+        print(vel)
+        print('+++++++++++++++++++++++++++++')
         self.mctl.y = vel.data
 
 if __name__=="__main__":
