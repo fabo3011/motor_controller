@@ -43,7 +43,7 @@ class tank_node:
 
 if __name__=="__main__":
     rospy.init_node('MotorsAlv')
-    #try:
-    tank_node()
-    #except:
-    #    pass
+    try:
+        tank_node()
+    except:
+        pass
