@@ -22,9 +22,9 @@ class tank:
         if joy.y > 0.2:
             self.goForward(0,self.fixPwm(joy.y))
         elif joy.y < -0.2:
-            self.goBackward('rigth',self.fixPwm(-joy.y))
+            self.goBackward('right',self.fixPwm(-joy.y))
         else:
-            self.setTo0('rigth')
+            self.setTo0('right')
 
         if joy.x > 0.2:
             self.goForward('left',self.fixPwm(joy.x))
