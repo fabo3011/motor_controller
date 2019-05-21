@@ -20,7 +20,7 @@ class tank:
     def tankDrive(self,joy):
         
         if joy.y > 0.2:
-            self.goForward(0,self.fixPwm(joy.y))
+            self.goForward('right',self.fixPwm(joy.y))
         elif joy.y < -0.2:
             self.goBackward('right',self.fixPwm(-joy.y))
         else:
