@@ -73,7 +73,7 @@ class tank:
     def setTo0(self,side):
         
         for i in range(3):
-            if side == 'rigth':
+            if side == 'right':
                 self.rccm.ForwardM1(self.msID[i],0)
             elif side == 'left':
                 self.rccm.ForwardM1(self.msID[i+3],0)
