@@ -54,7 +54,7 @@ class tank:
 
     def goForward(self,side,pwm):
         for i in range(3):
-            if side == 'rigth':
+            if side == 'right':
                 self.rccm.ForwardM1(self.msID[i],pwm)
             elif side == 'left':
                 self.rccm.BackwardM1(self.msID[i+3],pwm)
