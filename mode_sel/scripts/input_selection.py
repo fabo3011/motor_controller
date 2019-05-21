@@ -36,17 +36,17 @@ class input_sel:
 
     def selectVelByMode(self):
         rospy.loginfo(self.modeVel)
-        if   self.modeVel == 1:   #JOY mode
+        if   self.modeVel.data == 1:   #JOY mode
 
             self.left_Vel.data = self.joy2lVel.data
             self.rightVel.data = self.joy2rVel.data
 
-        elif self.modeVel == 2:   #Autonomous mode
+        elif self.modeVel.data == 2:   #Autonomous mode
 
             self.left_Vel.data = self.aut2lVel.data
             self.rightVel.data = self.aut2rVel.data
 
-        elif self.modeVel == UInt8(3):   #Stop Rover 
+        elif self.modeVel.data == 3:   #Stop Rover 
 
             self.left_Vel.data = 0
             self.rightVel.data = 0
