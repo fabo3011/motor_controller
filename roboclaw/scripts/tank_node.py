@@ -31,15 +31,9 @@ class tank_node:
 
     def left(self,vel):
         self.mctl.y = vel.data
-        print('-------------------------------')
-        print(self.mctl.y)
-        print('-------------------------------')
 
     def right(self,vel):
         self.mctl.x = vel.data
-        print('+++++++++++++++++++++++++++++')
-        print(self.mctl.y)
-        print('+++++++++++++++++++++++++++++')
 
 if __name__=="__main__":
     rospy.init_node('MotorsAlv')
