@@ -23,13 +23,16 @@ class tank:
             print(1)
             self.goForward('right',self.fixPwm(joy.y))
         elif joy.y < -0.02:
+            print(1.2)
             self.goBackward('right',self.fixPwm(-joy.y))
         else:
             self.setTo0('right')
 
         if joy.x > 0.02:
+            print(1.1)
             self.goForward('left',self.fixPwm(joy.x))
         elif joy.x < -0.02:
+            print(1.3)
             self.goBackward('left',self.fixPwm(-joy.x))
         else:
             self.setTo0('left')
@@ -59,19 +62,23 @@ class tank:
                 print(2)
                 self.rccm.ForwardM1(self.msID[i],pwm)
                 print(3)
-                time.sleep(0.050)
             elif side == 'left':
+                print(2.2)
                 self.rccm.BackwardM1(self.msID[i+3],pwm)
-                time.sleep(0.050)
+                print(3.3)
             else:
                 print("Warnig: command not found.")  
 
     def goBackward(self,side,pwm):
         for i in range(3):
             if side == 'right':
+                print(4)
                 self.rccm.BackwardM1(self.msID[i],pwm)
+                print(5)
             elif side == 'left':
+                print(4.4)
                 self.rccm.ForwardM1(self.msID[i+3],pwm)
+                print(5.5)
             else:
                 print("Warnig: command not found.")
     
