@@ -22,8 +22,9 @@ class tank_node:
         
         r = rospy.Rate(10)
         while not rospy.is_shutdown():
-            rospy.loginfo(self.speed)
+            #rospy.loginfo(self.speed)
             #print(self.mctl)
+            rospy.loginfo(self.mctl)
             self.speed.data = self.rover.tankDrive(self.mctl)
             speed_pub.publish(self.speed)
             r.sleep()
