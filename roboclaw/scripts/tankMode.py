@@ -20,6 +20,7 @@ class tank:
     def tankDrive(self,joy):
         
         if joy.y > 0.02:
+            print(1)
             self.goForward('right',self.fixPwm(joy.y))
         elif joy.y < -0.02:
             self.goBackward('right',self.fixPwm(-joy.y))
@@ -55,7 +56,9 @@ class tank:
     def goForward(self,side,pwm):
         for i in range(3):
             if side == 'right':
+                print(2)
                 self.rccm.ForwardM1(self.msID[i],pwm)
+                print(3)
                 time.sleep(0.050)
             elif side == 'left':
                 self.rccm.BackwardM1(self.msID[i+3],pwm)
