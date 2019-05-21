@@ -58,7 +58,7 @@ class input_sel:
             self.rightVel.data = 0
 
     def sideCB (self,cmode):
-        self.modeVel = cmode.data
+        self.modeVel.data = cmode.data
 
     def joy2linvel(self,joy):
         self.joy2rVel.data = joy.axes[1]
