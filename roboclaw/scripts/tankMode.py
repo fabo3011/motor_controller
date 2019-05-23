@@ -16,31 +16,36 @@ class tank:
         self.rccm = self.createRC(port,baud)
         self.open()
         self.resetEnc(motorsID)
+        self.setTo0Treshold = 0.05
+        self.prevPWM = [0,0,0,0,0,0]
+        self.serialDelay = 0.1
 
     def tankDrive(self,joy):
         
-        if joy.y > 0.02:
-            print(1)
+        if joy.y > self.setTo0Treshold:
+            #print("call forward R")
             self.goForward('right',self.fixPwm(joy.y))
-        elif joy.y < -0.02:
-            print(1.2)
+        elif joy.y < -self.setTo0Treshold:
+            #print("call backward R")
             self.goBackward('right',self.fixPwm(-joy.y))
         else:
+            #print("call setTo0 R")
             self.setTo0('right')
 
-        if joy.x > 0.02:
-            print(1.1)
+        if joy.x > self.setTo0Treshold:
+            #print("call forward L")
             self.goForward('left',self.fixPwm(joy.x))
-        elif joy.x < -0.02:
-            print(1.3)
+        elif joy.x < -self.setTo0Treshold:
+            #print("call backward L")
             self.goBackward('left',self.fixPwm(-joy.x))
         else:
+            #print("call setTo0 L")
             self.setTo0('left')
        # speed = self.ReadSpeed(self.msID)
         return 0
         
     def open(self):
-        for i in range(10):
+        for i in range(1):
             rospy.loginfo("waiting port: %s. %i sec." %(self.pord,10-i))
             time.sleep(1)
         else:
@@ -55,40 +60,51 @@ class tank:
     def createRC(self,port,baud):
         listrc = Roboclaw('/dev/' + port, baud)
         return listrc
+    
+    def PWMChanged(self, motor, pwm):
+        if pwm != self.prevPWM[motor]:
+            self.prevPWM[motor] = pwm
+            return True
+        return False
 
     def goForward(self,side,pwm):
         for i in range(3):
-            if side == 'right':
-                print(2)
+            if side == 'right' and self.PWMChanged(i, pwm):
+                print("goForward R: "+str(self.msID[i])+" "+str(pwm))
+                time.sleep(self.serialDelay)
                 self.rccm.ForwardM1(self.msID[i],pwm)
-                print(3)
-            elif side == 'left':
-                print(2.2)
+                print("done")
+            elif side == 'left' and self.PWMChanged(i+3, pwm):
+                print("goForward R: "+str(self.msID[i+3])+" "+str(pwm))
+                time.sleep(self.serialDelay)
                 self.rccm.BackwardM1(self.msID[i+3],pwm)
-                print(3.3)
-            else:
-                print("Warnig: command not found.")  
+                print("done") 
 
     def goBackward(self,side,pwm):
         for i in range(3):
-            if side == 'right':
-                print(4)
+            if side == 'right' and self.PWMChanged(i, -pwm):
+                print("goBackward R: "+str(self.msID[i])+" "+str(pwm))
+                time.sleep(self.serialDelay)
                 self.rccm.BackwardM1(self.msID[i],pwm)
-                print(5)
-            elif side == 'left':
-                print(4.4)
+                print("done")
+            elif side == 'left' and self.PWMChanged(i+3, -pwm):
+                print("goBackward L: "+str(self.msID[i+3])+" "+str(pwm))
+                time.sleep(self.serialDelay)
                 self.rccm.ForwardM1(self.msID[i+3],pwm)
-                print(5.5)
-            else:
-                print("Warnig: command not found.")
+                print("done")
     
     def setTo0(self,side):
-        
         for i in range(3):
-            if side == 'right':
+            if side == 'right' and self.PWMChanged(i, 0):
+                print("setTo0 R: "+str(self.msID[i])+" 0")
+                time.sleep(self.serialDelay)
                 self.rccm.ForwardM1(self.msID[i],0)
-            elif side == 'left':
+                print 'Done'
+            elif side == 'left' and self.PWMChanged(i+3, 0):
+                print("setTo0 L: "+str(self.msID[i+3])+" 0")
+                time.sleep(self.serialDelay)
                 self.rccm.ForwardM1(self.msID[i+3],0)
+                print 'Done'
 
     def fixPwm(self,percentage):
         return long(round(percentage*self.pwml,2))

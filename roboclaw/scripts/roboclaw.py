@@ -121,12 +121,25 @@ class Roboclaw:
 		return
 
 	def _sendcommand(self,address,command):
+		print "Before clear"
 		self.crc_clear()
+		print "Before update" + str(address)
 		self.crc_update(address)
-		self._port.write(chr(address))
-		self.crc_update(command)
-		self._port.write(chr(command))
-		return
+		print "Before port write"
+		if self._port.write(chr(address)) != 0:
+			print "Before update 2" +str(command)
+			self.crc_update(command)
+			print "Before write 2"
+			try:
+				if self._port.write(chr(command)) != 0:
+					print "yupi en write command"
+					return True
+			except:
+				print "QUe pedo perrooooooos"
+				time.sleep(1)
+				return False
+		print "carajo en write command"
+		return False
 
 	def _readchecksumword(self):
 		data = self._port.read(2)
@@ -173,7 +186,14 @@ class Roboclaw:
 
 	def _writebyte(self,val):
 		self.crc_update(val&0xFF)
-		self._port.write(chr(val&0xFF))
+		try:		
+			if self._port.write(chr(val&0xFF)) != 0:
+				return True
+		except:
+			"OLV PEEERROOOOOO"
+			time.sleep(1)
+			return False
+		return False
 
 	def _writesbyte(self,val):
 		self._writebyte(val)
@@ -308,11 +328,20 @@ class Roboclaw:
 	def _write1(self,address,cmd,val):
 		trys=self._trystimeout
 		while trys:
-			self._sendcommand(address,cmd)
-			self._writebyte(val)
-			if self._writechecksum():
-				return True
+			print("writting "+str(trys))
+			if self._sendcommand(address,cmd):
+				print("sentcommand "+str(address)+" "+str(cmd))
+				if self._writebyte(val):
+					print("sent byte "+str(val))
+					if self._writechecksum():
+						print("successful check")
+						return True
+				else:
+					print "me mame en el byte"
+			else:
+				print "me mame"
 			trys=trys-1
+		print("I failed you senpai :'(")
 		return False
 
 	def _write11(self,address,cmd,val1,val2):
@@ -644,10 +673,14 @@ class Roboclaw:
 		return
 
 	def ForwardM1(self,address,val):
-		return self._write1(address,self.Cmd.M1FORWARD,val)
+		aux= self._write1(address,self.Cmd.M1FORWARD,val)
+		print "Funciono el forward prro"		
+		return aux
 
 	def BackwardM1(self,address,val):
-		return self._write1(address,self.Cmd.M1BACKWARD,val)
+		aux= self._write1(address,self.Cmd.M1BACKWARD,val)
+		print "Funciono el backward prro"
+		return aux
 
 	def SetMinVoltageMainBattery(self,address,val):
 		return self._write1(address,self.Cmd.SETMINMB,val)
@@ -1029,7 +1062,9 @@ class Roboclaw:
 
 	def Open(self):
 		try:
-			self._port = serial.Serial(port=self.comport, baudrate=self.rate, timeout=1, interCharTimeout=self.timeout)
+			print "Baudrate "+str(self.rate)
+			self._port = serial.Serial(port=self.comport, baudrate=self.rate, timeout=0.1, interCharTimeout=self.timeout, write_timeout=.5)
+			time.sleep(2)
 		except:
 			return 0
 		return 1
